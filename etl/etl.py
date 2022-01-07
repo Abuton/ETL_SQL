@@ -530,14 +530,12 @@ def get_all_feature(df: DataFrame, orders: DataFrame) -> DataFrame:
     no_error_code_count = total_count_polling_no_error_code_3min_b4.merge(
         total_count_polling_no_error_code_3min_after, on=["order_id", "error_code"]
     ).merge(total_count_polling_no_error_code_1hr_b4, on=["order_id", "error_code"])
-    error_codes = error_code_count.merge(
-        no_error_code_count, on=["order_id", "error_code"]
-    )
 
     main_data = (
         orders.merge(polling_events, how="left", on="order_id")
         .merge(status_code_count, how="left", on="order_id")
-        .merge(error_codes, how="left", on="order_id")
+        .merge(error_code_count, how="left", on="order_id")
+        .merge(no_error_code_count, how='left', on='order_id')
     )
     main_data.replace(np.nan, 0, inplace=True)
     main_data.sort_values("order_id", inplace=True)
