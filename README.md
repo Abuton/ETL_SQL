@@ -1,4 +1,4 @@
-# Technical Test - BI DE Engineer
+# ETL SQL
 
 Solution to task 1 KPI is contained in the file `task1.Glovo KPI Metrics.pdf`
 
