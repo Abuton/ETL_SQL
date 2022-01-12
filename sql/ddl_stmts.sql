@@ -31,11 +31,7 @@ CREATE TABLE IF NOT EXISTS customer_courier_conversations(
   first_responsetime_delay_seconds timestamp,
   last_message_time timestamp,
   last_message_order_stage text,
-  CONSTRAINT fk_order
-      FOREIGN KEY(order_id) 
-	  REFERENCES orders(order_id)
-	  ON DELETE SET NULL,
-  CONSTRAINT unique_order_conversation UNIQUE(order_id)
+  PRIMARY KEY (order_id)
 );
 
 -- insert ddl statement, to insert records into the customer_courier_chat_messages table
