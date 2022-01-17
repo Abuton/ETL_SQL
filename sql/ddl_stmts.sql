@@ -98,3 +98,14 @@ SELECT o.orders_id, first_courier_msg, first_customer_msg, number_msg_courier, n
     join last_msg_order_stage on last_msg_order_stage.order_id = o.orders_id;
     
 select * from customer_courier_conversations;
+
+with order_rows as (
+  select order_id, order_stage, ROW_NUMBER() OVER(PARTITION BY order_id) as row_num 
+               from customer_courier_chat_messages
+  ),
+  max_rowss as (
+    select order_id, max(row_num) as last_order_stage from order_rows group by order_id
+    )
+ 
+select od.order_id, order_stage from order_rows od join max_rowss mr using(order_id)
+  where row_num  = last_order_stage;
